@@ -6,10 +6,10 @@ class Pet:  #Parent class for all animal classes
         self.birthDate = datetime.strptime(birthDate, "%Y/%m/%d")  #Convert time string into datetime using strptime
         self.lastVac = datetime.strptime(lastVac, "%Y/%m/%d")
 
-    def getNext(self, startDate, days): #Add days to the given date using timedelta
+    def getNext(self, startDate, days): #Function adds days to the given date using timedelta
         return startDate + timedelta(days=days)
 
-    def getFutureDate(self, startDate, interval):
+    def getFutureDate(self, startDate, interval): #Function brings old dates into the present 
         today = datetime.now()
         futureDate = startDate
 
@@ -18,6 +18,7 @@ class Pet:  #Parent class for all animal classes
 
         return futureDate
 
+#Unique class which inherit from pet class and hold unique methods based on check/vac intervals
 
 class Dog(Pet):  #Animal class for dogs
     def getSchedule(self):
@@ -115,8 +116,8 @@ def menu():
     if animal not in vaccineArray:
         lastVac = ("2000/12/12").strip() #Placeholder date for non-vac animals
 
-    pet = factory(name, animal, birthDate, lastVac)  #Create the pet object through the factory function
-    schedule = pet.getSchedule()  #Get the pet's vaccination and health check schedule
+    pet = factory(name, animal, birthDate, lastVac)  #Uses the factory function to create the pets schedule and displays the results
+    schedule = pet.getSchedule()
 
     print("\nVaccination and Health Check Schedule:") #Output adjusted dates and information to user
     print(f"Name: {schedule['name']}")
