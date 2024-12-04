@@ -100,7 +100,7 @@ def menu():
     animal = input("What is your pet? (dog, cat, rabbit, reptile, bird)\n> ").strip() #request input from user for pet species
     animal = animal.upper()
     if animal not in animalArray: #validation to ensure listed animal is picked
-        print("Please enter an animal from the list presented.\n")
+        print("\nPlease enter an animal from the list presented.\n")
         menu()
 
     name = input("Whats is your pets name?\n>").strip() #pet name input
@@ -109,7 +109,7 @@ def menu():
     try:
         datetime.strptime(birthDate, "%Y/%m/%d") #checking input format against datetime format using striptime
     except:
-        print("Invalid date format, Please use YYYY/MM/DD.")
+        print("\nInvalid date format, Please use YYYY/MM/DD.")
         menu()
 
     if animal in vaccineArray:
@@ -117,7 +117,7 @@ def menu():
         try:
             datetime.strptime(lastVac, "%Y/%m/%d") #checking input format against datetime format using striptime
         except:
-            print("Invalid date format, Please use YYYY/MM/DD.")
+            print("\nInvalid date format, Please use YYYY/MM/DD.")
             menu()
     
     if animal not in vaccineArray:
