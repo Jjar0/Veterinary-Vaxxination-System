@@ -1,64 +1,53 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
-class Pet:
-    def __init__(self, name, birthDate, lastVac): #initialise a pet object and info
+class Pet:  # Parent class for all animal classes
+    def __init__(self, name, birthDate, lastVac):  # Initialize a pet object and info
         self.name = name
-        self.birthDate = datetime.strptime(birthDate, "%Y/%m/%d") #convert time string into datetime using striptime
-        self.lastVac = datetime.strptime(lastVac, "%Y/%m/%d") #convert time string into datetime using striptime
+        self.birthDate = datetime.strptime(birthDate, "%Y/%m/%d")  # Convert time string into datetime using strptime
+        self.lastVac = datetime.strptime(lastVac, "%Y/%m/%d")
 
     def getNext(self, date, days):
+        return date + timedelta(days=days)  #add days to the given date using timedelta
 
-        year = date.year
-        month = date.month
-        day = date.day
+    def getFutureDate(self, startDate, interval): #function to to take entered dates and iterate themselves until present is reached
+        today = datetime.now()
+        nextDate = self.getNext(startDate, interval)
 
-        day += days 
+        while nextDate <= today: #loop until the calculated next date is in the future
+            nextDate = self.getNext(nextDate, interval)
 
-        days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  
+        return nextDate  #return as datetime object (to be formatted later)
 
-        if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)): 
-            days_in_month[1] = 29
 
-        while day > days_in_month[month - 1]: 
-            day -= days_in_month[month - 1]
-            month += 1
-            if month > 12:  
-                month = 1
-                year += 1
-
-                if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)):
-                    days_in_month[1] = 29
-                else:
-                    days_in_month[1] = 28
-
-        return f"{year}/{month:02d}/{day:02d}"  #return formatted string
-
-class Dog(Pet):
+class Dog(Pet):  #animal class which holds unique information about the species (checkup and vac times)
     def getSchedule(self):
         return {
             "name": self.name,
             "animal": "Dog",
-            "nextVac": self.getNext(self.lastVac,365),
-            "nextCheck": self.getNext(self.lastVac,365),
+            "nextVac": self.getFutureDate(self.lastVac, 365).strftime("%Y/%m/%d"),
+            "nextCheck": self.getFutureDate(self.birthDate, 365).strftime("%Y/%m/%d"),
         }
+
 
 class Cat(Pet):
     def getSchedule(self):
         return {
             "name": self.name,
             "animal": "Cat",
-            "nextVac": self.getNext(self.lastVac,180),
-            "nextCheck": self.getNext(self.lastVac,180),
+            "nextVac": self.getFutureDate(self.lastVac, 180).strftime("%Y/%m/%d"),
+            "nextCheck": self.getFutureDate(self.birthDate, 180).strftime("%Y/%m/%d"),
         }
+
 
 class Rabbit(Pet):
     def getSchedule(self):
         return {
             "name": self.name,
             "animal": "Rabbit",
-            "nextVac": self.getNext(self.lastVac,90),
-            "nextCheck": self.getNext(self.lastVac,180),
+            "nextVac": self.getFutureDate(self.lastVac, 90).strftime("%Y/%m/%d"),
+            "nextCheck": self.getFutureDate(self.birthDate, 180).strftime("%Y/%m/%d"),
         }
+
 
 class Reptile(Pet):
     def getSchedule(self):
@@ -66,8 +55,9 @@ class Reptile(Pet):
             "name": self.name,
             "animal": "Reptile",
             "nextVac": "N/A",
-            "nextCheck": self.getNext(self.lastVac,365),
+            "nextCheck": self.getFutureDate(self.birthDate, 365).strftime("%Y/%m/%d"),
         }
+
 
 class Bird(Pet):
     def getSchedule(self):
@@ -75,62 +65,63 @@ class Bird(Pet):
             "name": self.name,
             "animal": "Bird",
             "nextVac": "N/A",
-            "nextCheck": self.getNext(self.lastVac,730),
+            "nextCheck": self.getFutureDate(self.birthDate, 730).strftime("%Y/%m/%d"),
         }
-    
-def factory(name, animal, birthDate, lastVac): #factory function
-    animalDict = { #dictionary linking animal types to their class
+
+
+def factory(name, animal, birthDate, lastVac):  #factory function creates animal schedule profile
+    animalDict = {  #dictionary linking animal types to their class
         "DOG": Dog,
         "CAT": Cat,
         "RABBIT": Rabbit,
         "REPTILE": Reptile,
         "BIRD": Bird,
     }
-    
-    userPet = animalDict.get(animal.upper())#find the class based on the animal type using 'get'
-    return userPet(name, birthDate, lastVac)
-    
-def menu():
 
-    animalArray = ['DOG','CAT','RABBIT','REPTILE','BIRD']
-    vaccineArray = ['DOG','CAT','RABBIT']
-    
+    userPet = animalDict.get(animal.upper())  #find the class based on the animal type using 'get'
+    return userPet(name, birthDate, lastVac)
+
+
+def menu():
+    animalArray = ['DOG', 'CAT', 'RABBIT', 'REPTILE', 'BIRD']  #array of all animals
+    vaccineArray = ['DOG', 'CAT', 'RABBIT']  #array of animals that need vaccines
+
     print("\n[Please enter pet information]\n")
 
-    animal = input("What is your pet? (dog, cat, rabbit, reptile, bird)\n> ").strip() #request input from user for pet species
-    animal = animal.upper()
-    if animal not in animalArray: #validation to ensure listed animal is picked
+    animal = input("What is your pet? (dog, cat, rabbit, reptile, bird)\n> ").strip().upper()
+    if animal not in animalArray:  #validation to ensure listed animal is picked
         print("\nPlease enter an animal from the list presented.\n")
         menu()
 
-    name = input("Whats is your pets name?\n>").strip() #pet name input
+    name = input("What is your pet's name?\n> ").strip()  #pet name input
 
-    birthDate = input("What is your pets date of birth (YYYY/MM/DD)\n> ").strip() #request birth date
+    birthDate = input("What is your pet's date of birth (YYYY/MM/DD)\n> ").strip()  #request birth date
     try:
-        datetime.strptime(birthDate, "%Y/%m/%d") #checking input format against datetime format using striptime
+        datetime.strptime(birthDate, "%Y/%m/%d")  #validate input format
     except:
         print("\nInvalid date format, Please use YYYY/MM/DD.")
         menu()
 
     if animal in vaccineArray:
-        lastVac = input("When was your pets last vaccination (YYYY/MM/DD)\n> ").strip() #request last vaccine date
+        lastVac = input("When was your pet's last vaccination (YYYY/MM/DD)\n> ").strip()  #request last vaccine date
         try:
-            datetime.strptime(lastVac, "%Y/%m/%d") #checking input format against datetime format using striptime
+            datetime.strptime(lastVac, "%Y/%m/%d")  #validate input format
         except:
             print("\nInvalid date format, Please use YYYY/MM/DD.")
             menu()
     
     if animal not in vaccineArray:
-        lastVac = ("2000/12/12").strip() #placeholder date
+        lastVac == ("2000/01/01").strip()  #placeholder for animals that don't need vaccination
 
-    pet = factory(name, animal, birthDate, lastVac)
-    schedule = pet.getSchedule()
+    pet = factory(name, animal, birthDate, lastVac)  #create the pet object through calling the factory function
+    schedule = pet.getSchedule()  #get the pet's vaccination and health check schedule
 
     print("\nVaccination and Health Check Schedule:")
     print(f"Name: {schedule['name']}")
     print(f"Animal: {schedule['animal']}")
     print(f"Next Vaccination: {schedule['nextVac']}")
     print(f"Next Health Check: {schedule['nextCheck']}")
+
 
 print("// Pet Vaccination and Health Checkup System //")
 menu()
