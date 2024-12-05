@@ -21,8 +21,8 @@ class Pet:  #Parent class for all animal classes
         return futureDate
 
     def getSchedule(self):  #Handles vaccination schedule
-        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d")
-        nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d")
+        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d") #calls getFutureDate to find next vaccine if a vaccine date is present
+        nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d") #calls getFutureDate to find the next health check
 
         return {
             "name": self.name,
@@ -35,7 +35,7 @@ class Pet:  #Parent class for all animal classes
 
 class Dog(Pet):
     def __init__(self, name, birthDate, lastVac):
-        super().__init__(name, birthDate, lastVac, vacInterval=365, checkInterval=365)
+        super().__init__(name, birthDate, lastVac, vacInterval=365, checkInterval=365) #Calls _init_ method from pet parent class using super()
 
 class Cat(Pet):
     def __init__(self, name, birthDate, lastVac):
@@ -102,7 +102,7 @@ def menu():
     pet = factory(name, animal, birthDate, lastVac)  #Uses the factory function to create the pet's schedule
     schedule = pet.getSchedule()
 
-    print("\nVaccination and Health Check Schedule:")
+    print("\nVaccination and Health Check Schedule:") #Output returned info to user
     print(f"Name: {schedule['name']}")
     print(f"Animal: {schedule['animal']}")
     print(f"Next Vaccination: {schedule['nextVac']}")
