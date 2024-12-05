@@ -5,8 +5,8 @@ class Pet: #Parent class for all animal classes
         self.name = name
         self.birthDate = datetime.strptime(birthDate, "%Y/%m/%d") #Convert time string into datetime using strptime
         self.lastVac = datetime.strptime(lastVac, "%Y/%m/%d") if lastVac else None
-        self.vac_interval = vacInterval  #Vaccination interval
-        self.check_interval = checkInterval  #Health check interval
+        self.vacInterval = vacInterval  #Vaccination interval
+        self.checkInterval = checkInterval  #Health check interval
 
     def getNext(self, startDate, days): #Function adds days to the given date using timedelta
         return startDate + timedelta(days=days)
@@ -21,7 +21,7 @@ class Pet: #Parent class for all animal classes
         return futureDate
 
     def getSchedule(self): #Handles vaccination schedule
-        
+
         nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d")
         nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d")
 
