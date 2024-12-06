@@ -99,8 +99,8 @@ def menu():
             print("\nInvalid date format, please use YYYY/MM/DD")
             menu()
 
-    pet = factory(name, animal, birthDate, lastVac)  #Uses the factory function to create the pet's schedule
-    schedule = pet.getSchedule()
+    pet = factory(name, animal, birthDate, lastVac)  #Uses the factory function to create the pet object
+    schedule = pet.getSchedule() 
 
     print("\nVaccination and Health Check Schedule:") #Output returned info to user
     print(f"Name: {schedule['name']}")
