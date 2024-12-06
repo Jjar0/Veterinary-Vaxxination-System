@@ -21,8 +21,10 @@ class Pet:  #Parent class for all animal classes
         return futureDate
 
     def getSchedule(self):  #Handles vaccination schedule
-        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d") #calls getFutureDate to find next vac if a vacdate is present
-        nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d") #calls getFutureDate to find the next health check
+        #calls getFutureDate to find next vac if a vacdate is present
+        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d") 
+        #calls getFutureDate to find the next health check
+        nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d")
 
         return {
             "name": self.name,
@@ -32,10 +34,10 @@ class Pet:  #Parent class for all animal classes
         }
 
 #Unique subclass which inherits from pet class and holds unique methods based on check/vac intervals
-
+#Calls _init_ method from pet parent class using super()
 class Dog(Pet):
     def __init__(self, name, birthDate, lastVac):
-        super().__init__(name, birthDate, lastVac, vacInterval=365, checkInterval=365) #Calls _init_ method from pet parent class using super()
+        super().__init__(name, birthDate, lastVac, vacInterval=365, checkInterval=365) 
 
 class Cat(Pet):
     def __init__(self, name, birthDate, lastVac):
