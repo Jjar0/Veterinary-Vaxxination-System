@@ -21,7 +21,7 @@ class Pet:  #Parent class for all animal classes
         return futureDate
 
     def getSchedule(self):  #Handles vaccination schedule
-        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d") #calls getFutureDate to find next vaccine if a vaccine date is present
+        nextVac = "N/A" if not self.lastVac else self.getFutureDate(self.lastVac, self.vacInterval).strftime("%Y/%m/%d") #calls getFutureDate to find next vac if a vacdate is present
         nextCheck = self.getFutureDate(self.birthDate, self.checkInterval).strftime("%Y/%m/%d") #calls getFutureDate to find the next health check
 
         return {
@@ -100,7 +100,7 @@ def menu():
             menu()
 
     pet = factory(name, animal, birthDate, lastVac)  #Uses the factory function to create the pet object
-    schedule = pet.getSchedule() 
+    schedule = pet.getSchedule() #creates schedule from returned values
 
     print("\nVaccination and Health Check Schedule:") #Output returned info to user
     print(f"Name: {schedule['name']}")
