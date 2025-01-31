@@ -23,10 +23,10 @@ class TestIntegration(unittest.TestCase):
         self.assertIsInstance(reptile, Reptile)
         self.assertEqual(reptile.getSchedule()["name"], "Lizzy")
 
-    @patch("builtins.input", side_effect=["dog", "Buddy", "2021/01/01", "2023/06/10"])
+    @patch("builtins.input", side_effect=iter(["dog", "Buddy", "2021/01/01", "2023/06/10", ""]))
     @patch("builtins.print")  # Suppresses print output for cleaner test results
     def test_menu_processes_user_input(self, mock_print, mock_input):
-        """Test that menu() correctly processes user input and integrates with factory()"""
+        #Test that menu() correctly processes user input and integrates with factory()
         try:
             menu()
         except RecursionError:
