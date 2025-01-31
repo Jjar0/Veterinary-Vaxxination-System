@@ -9,3 +9,9 @@ python -m unittest tests.test_pet.TestPet.test_getSchedule
 
 for intergration testing:
 python -m unittest tests.test_integration
+
+system test:
+python -m unittest tests.test_system
+
+Acceptance test:
+python -m unittest tests.test_acceptance

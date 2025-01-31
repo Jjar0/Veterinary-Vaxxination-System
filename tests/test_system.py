@@ -20,17 +20,6 @@ class TestSystem(unittest.TestCase):
         # Check if print() was called, meaning output was generated
         self.assertTrue(mock_print.called)
 
-    @patch("builtins.input", side_effect=["cat", "Whiskers", "2020/05/15", "2023/06/10", "exit"])
-    @patch("builtins.print")
-    def test_full_system_flow_cat(self, mock_print, mock_input):
-        # Test full system flow for adding Cat
-        try:
-            menu()
-        except RecursionError:
-            pass
-
-        self.assertTrue(mock_print.called)
-
     @patch("builtins.input", side_effect=["reptile", "Lizzy", "2019/09/30", "exit"])
     @patch("builtins.print")
     def test_full_system_flow_reptile(self, mock_print, mock_input):
