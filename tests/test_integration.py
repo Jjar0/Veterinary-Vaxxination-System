@@ -23,8 +23,8 @@ class TestIntegration(unittest.TestCase):
         self.assertIsInstance(reptile, Reptile)
         self.assertEqual(reptile.getSchedule()["name"], "Lizzy")
 
-    @patch("builtins.input", side_effect=iter(["dog", "Buddy", "2021/01/01", "2023/06/10", ""]))
-    @patch("builtins.print")  # Suppresses print output for cleaner test results
+    @patch("builtins.input", side_effect=iter(["dog", "Buddy", "2021/01/01", "2023/06/10"] * 5))  # Repeat values
+    @patch("builtins.print")
     def test_menu_processes_user_input(self, mock_print, mock_input):
         #Test that menu() correctly processes user input and integrates with factory()
         try:
@@ -32,7 +32,6 @@ class TestIntegration(unittest.TestCase):
         except RecursionError:
             pass  # Ignore infinite recursion in menu()
 
-        # Check if print() was called, to tell if output was generated
         self.assertTrue(mock_print.called)
 
     def test_pet_scheduling_logic(self):
