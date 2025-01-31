@@ -18,8 +18,16 @@ class TestPet(unittest.TestCase):
         # Test if getFutureDate correctly calculates the next appointment
         test_date = datetime(2020, 1, 1)
         interval = 180
-        expected_date = self.pet.getFutureDate(test_date, interval)  # What the function should return
-        self.assertEqual(expected_date, self.pet.getNext(test_date, interval)) # validation of date acuraccy
+
+        # Start with test_date and increment until correct future date
+        expected_date = test_date
+        while expected_date <= datetime.now():
+            expected_date = self.pet.getNext(expected_date, interval)  # Increment by interval
+
+        future_date = self.pet.getFutureDate(test_date, interval)  # Get output from method
+
+        # compare against the actual expected future date
+        self.assertEqual(future_date, expected_date)
 
     def test_getSchedule(self):
         # Test getSchedule returns correct data structure
