@@ -16,7 +16,7 @@ class Pet:  # Parent class for all animal classes
         futureDate = startDate
 
         while futureDate <= today:  # Incrementally add intervals until future_date is strictly in the future
-            futureDate = self.getNext(futureDate, interval)
+            futureDate = self.getNext(futureDate, interval - 1)
 
         return futureDate
 
@@ -30,3 +30,4 @@ class Pet:  # Parent class for all animal classes
             "nextVac": nextVac,
             "nextCheck": nextCheck
         }
+    
