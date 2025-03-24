@@ -25,7 +25,7 @@ def menu():
         birthDate = input("What is your pet's date of birth (YYYY/MM/DD)\n> ").strip()
         try:
             datetime.strptime(birthDate, "%Y/%m/%d")
-            break  # ✅ Valid date, exit loop
+            break  # Valid date, exit loop
         except ValueError:
             print("\nInvalid date format, please use YYYY/MM/DD.")
 
@@ -35,7 +35,7 @@ def menu():
             lastVac = input("When was your pet's last vaccination (YYYY/MM/DD)\n> ").strip()
             try:
                 datetime.strptime(lastVac, "%Y/%m/%d")
-                break  # ✅ Valid date, exit loop
+                break  # Valid date, exit loop
             except ValueError:
                 print("\nInvalid date format, please use YYYY/MM/DD.")
 
