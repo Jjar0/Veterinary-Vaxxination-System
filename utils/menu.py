@@ -2,8 +2,8 @@ from datetime import datetime
 from utils.factory import factory
 
 def menu():
-    animalArray = ['DOG', 'CAT', 'RABBIT', 'REPTILE', 'BIRD']
-    vaccineArray = ['DOG', 'CAT', 'RABBIT']
+    animalArray = ['DOG', 'CAT', 'RABBIT', 'REPTILE', 'BIRD'] # Arrays holding all animals
+    vaccineArray = ['DOG', 'CAT', 'RABBIT'] # Array holding only animals that ned vaccines
 
     print("\n[Please enter pet information]\n")
 
@@ -12,10 +12,10 @@ def menu():
 
         if animal == "EXIT":
             print("\nExiting menu...")
-            return  #Graceful exit
+            return
 
         if animal in animalArray:
-            break  #exit loop
+            break  # Exit loop
         else:
             print("\nPlease enter an animal from the list presented.")
 
